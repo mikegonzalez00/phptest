@@ -1,7 +1,8 @@
 <?php
 
-
+include '../carrito.php';
 include '../DAO/model_products.php';
+
 
 $id=$_REQUEST['id'];
 
@@ -10,16 +11,17 @@ $lista=$objMethod->get_products_id($id);
 
 $categoria=$lista[0];
 
-$id=$lista[1];
+foreach ($lista as $row){
+$id=$row[1];
 
-$nombre=$lista[2];
+$nombre=$row[2];
 
-$descripcion=$lista[3];
+$descripcion=$row[3];
 
-$imagen=$lista[4];
+$imagen=$row[4];
 
-$precio=$lista[5];
-
+$precio=$row[5];
+}
 
 ?>
 <html>
@@ -46,6 +48,38 @@ $precio=$lista[5];
 </head>
 
 <body>
+
+<form>
+<table>
+	<tr>
+	<th rowspan="4"><img src="../imagenes/<?php echo $imagen ; ?>.jpg" width="200" height="200"></th>
+	<th><h4><?php echo $nombre; ?></h4> </th>
+	</tr>
+	<tr>
+	<td><p><?php echo $descripcion; ?></p> </td>
+	</tr>
+	<tr>
+	<th><h3><?php echo $precio; ?></h3> </th>
+	</tr>
+	<tr>
+	<td aling="right">Ingrese cantidad: <input type="number" min="1" max="100" value="1" name="tctCan"> </td> 
+	</tr>
+	<tr>
+		<th align="right" colspan="2">
+		<button class='mdl-button mdl-js-button mdl-button--raised  mdl-button--accent' type='button'>Cerrar</button>
+		<form action="" method="post">
+			<input type="text" name="id" id="id" value="<?php echo openssl_encrypt($id, COD, KEY); ?>">
+			<input type="text" name="nombre" id="nombre" value="<?php echo openssl_encrypt($nombre, COD, KEY); ?>">
+			<input type="text" name="precio" id="precio" value="<?php echo openssl_encrypt($precio, COD, KEY); ?>">
+			<input type="text" name="cantidad" id="cantidad" value="<?php echo openssl_encrypt(1, COD, KEY);; ?>">
+		</form>
+		<button class='mdl-button mdl-js-button mdl-button--raised  mdl-button--accent' name="btnAdd" value="Add" type='button'>Agregar a Carrito</button><?php echo $mensaje; ?>
+
+		</th>
+	</tr>
+
+</table>
+</form>
 
 </body>
 </html>

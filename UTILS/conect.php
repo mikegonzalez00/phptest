@@ -1,14 +1,20 @@
 <?php
 
+
+include 'config.php';
+
+
+
 class conect{
 
 
 	public static function conection(){
 
+		$server="mysql:dbname=" . BD . ";host=" . SERVIDOR;
 
 		try{
 
-			$conection= new PDO('mysql:host=localhost; dbname=prod2coco', 'root', '');
+			$conection= new PDO($server,USUARIO,PASSWORD);
 
 			$conection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
